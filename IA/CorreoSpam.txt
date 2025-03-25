@@ -1,0 +1,51 @@
+Sistema Gestor de Spam correos:
+Preparación
+1. Requisitos:
+	Python 3.x.
+	Librerias de Python
+	Numpy
+	Pandas
+	Sklearn
+2. Datos:
+
+	Conjunto de datos SpamAssassin Public Corpus que contiene 5827 correos electrónicos etiquetados como "spam = 1" o "no spam = 0".
+	https://www.kaggle.com/datasets/ganiyuolalekan/spam-assassin-email-classification-dataset
+
+2. Preprocesamiento de datos:
+	1.- Elimiar correps electrónicos duplicados
+	2.- Convertir todo el texto a minúsculas.
+	3.- Eliminar caracteres especiales
+	4.- Eliminar palabras vacías (stopwords)
+	5.- Tokenizar el texto (Hay librerías que nos ayudan a tokenizar el texto).
+
+Desarrollo:
+1. Extracción de características:
+	Frecuencia de términos (TF): Contar el numero de veces que aparece cada palabra en un correo electrónico.
+	Frecuencia de términos invertida (IDF): Medir la importancia de cada palabra en el conjunto de datos.
+	TF-IDF: Combinar TF e IDF para obtener una medida ponderada de la importancia de cada palabra.
+
+2. Modelo:
+	El modelo se basará en el teorema de Bayes para calcular la probabilidad de que un correo electrónico sea spam dado su conjunto de características.
+
+3. Algoritmo (Código en python):
+	1. Calcular la probabilidad previa de spam (P(Spam)):
+		P_spam = numero_correos_spam / total_correos
+
+	2.- Calcular la probabilidad de las características del correo electrónico dado que es spam (P(Características | Spam))
+		P_caracteristicas_spam = frecuencia_caracteristicas_spam / total_caracteristicas_spam
+
+	3.- Calcular la probabilidad de las características del correo electrónico que no es spam (P(Características | NoSpam))
+		P_caracteristicas_no_spam = frecuencia_caracteristicas_no_spam / total_caracteristicas_no_spam
+
+	4.- Calcular la probabilidad posterior de que el correo electrónico sea spam (P(Spam | Caracteristicas))
+		P_spam_caracteristicas = (P_spam * P_caracteristicas_spam) / (P_Spam * P_caracteristicas_spam + P_no_spam * P_caracteristicas_no_spam)
+
+
+5. Clasificación:
+	Un correo electrónico se clasificara como spam si:
+		P(Spam | Caracteristicas) >P(NoSpam | Caracteristicas)
+
+6. Evaluación:
+	precisión = np.sum(clasificaciones == data["spam"] / len(clasificaciones))
+
+		
